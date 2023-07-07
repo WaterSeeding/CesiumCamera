@@ -64,6 +64,43 @@ class Camera {
     setGui(gui, this.cameraParams, Camera.instance);
   }
 
+  setFly(cameraParams: CameraParamsInterface, completeCb: Function) {
+    this.camera.flyTo({
+      destination: Cesium.Cartesian3.fromDegrees(
+        cameraParams.position.longitude,
+        cameraParams.position.latitude,
+        cameraParams.position.height,
+        Cesium.Ellipsoid.WGS84
+      ),
+      orientation: {
+        heading: Cesium.Math.toRadians(cameraParams.headingPitchRoll.heading),
+        pitch: Cesium.Math.toRadians(cameraParams.headingPitchRoll.pitch),
+        roll: Cesium.Math.toRadians(cameraParams.headingPitchRoll.roll),
+      },
+      complete: () => {
+        completeCb?.();
+      },
+    });
+  }
+
+  setFlyBoundingSphere(
+    boundingSphere: Cesium.BoundingSphere,
+    cameraParams: CameraParamsInterface,
+    completeCb: Function
+  ) {
+    this.camera.flyToBoundingSphere(boundingSphere, {
+      duration: 1.5,
+      offset: new Cesium.HeadingPitchRange(
+        cameraParams.headingPitchRoll.heading,
+        cameraParams.headingPitchRoll.pitch,
+        cameraParams.position.height
+      ),
+      complete: () => {
+        completeCb?.();
+      },
+    });
+  }
+
   setView(cameraParams: CameraParamsInterface) {
     this.camera.setView({
       destination: Cesium.Cartesian3.fromDegrees(

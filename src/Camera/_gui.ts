@@ -12,6 +12,8 @@ export const setGui = (
   let camera_folder = gui.addFolder("Camera");
   camera_folder.open();
 
+  console.log("guiParams", guiParams);
+
   let initGuiParams = Object.assign({}, guiParams);
   let downloadGuiParams = Object.assign({}, guiParams);
 
@@ -21,8 +23,8 @@ export const setGui = (
     "longitude",
     "longitude",
     {
-      min: -180,
-      max: 180,
+      min: -360,
+      max: 360,
       step: 0.000001,
     },
     () => {
@@ -36,8 +38,8 @@ export const setGui = (
     "latitude",
     "latitude",
     {
-      min: -180,
-      max: 180,
+      min: -360,
+      max: 360,
       step: 0.000001,
     },
     () => {
@@ -60,6 +62,51 @@ export const setGui = (
     }
   );
 
+  setGuiSlide(
+    camera_folder,
+    guiParams.headingPitchRoll,
+    "heading",
+    "heading",
+    {
+      min: -360,
+      max: 360,
+      step: 0.000001,
+    },
+    () => {
+      camera.setView(guiParams);
+    }
+  );
+
+  setGuiSlide(
+    camera_folder,
+    guiParams.headingPitchRoll,
+    "pitch",
+    "pitch",
+    {
+      min: -360,
+      max: 360,
+      step: 0.000001,
+    },
+    () => {
+      camera.setView(guiParams);
+    }
+  );
+
+  setGuiSlide(
+    camera_folder,
+    guiParams.headingPitchRoll,
+    "roll",
+    "roll",
+    {
+      min: -360,
+      max: 360,
+      step: 0.000001,
+    },
+    () => {
+      camera.setView(guiParams);
+    }
+  );
+
   let obj = {
     getInfo: () => {
       let info = camera.getInfo();
@@ -68,8 +115,14 @@ export const setGui = (
       let info = camera.getInfo();
       console.log("相机更新", info);
     },
+    locationInfo: () => {
+      camera.setFly(guiParams, () => {
+        console.log("飞行定位");
+      });
+    },
   };
 
   camera_folder.add(obj, "getInfo").name("相机参数");
   camera_folder.add(obj, "updateInfo").name("相机更新");
+  camera_folder.add(obj, "locationInfo").name("相机定位");
 };
