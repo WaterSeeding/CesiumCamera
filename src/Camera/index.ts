@@ -11,21 +11,21 @@ export interface CameraInterface {
 export interface CameraParamsInterface {
   // degrees
   direction?: {
-    longitude: number;
-    latitude: number;
-    height: number;
+    longitude?: number;
+    latitude?: number;
+    height?: number;
   };
   // degrees
   position?: {
-    longitude: number;
-    latitude: number;
-    height: number;
+    longitude?: number;
+    latitude?: number;
+    height?: number;
   };
   // degrees
   headingPitchRoll?: {
-    heading: number;
-    pitch: number;
-    roll: number;
+    heading?: number;
+    pitch?: number;
+    roll?: number;
   };
 }
 

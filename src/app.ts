@@ -14,13 +14,13 @@ gui.show();
 
 let camera = new Camera(viewer, gui, {
   position: {
-    height: 2007.468795771161,
-    latitude: 22.508071387268746,
-    longitude: 114.0473043657834,
+    height: 50000,
+    longitude: 113.976006,
+    latitude: 22.475603,
   },
   headingPitchRoll: {
-    heading: 359.9999999999997,
-    pitch: -89.94558776094708,
+    heading: 360,
+    pitch: -89.897722,
     roll: 0,
   },
 });
