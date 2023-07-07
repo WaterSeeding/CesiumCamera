@@ -39,7 +39,7 @@ class Camera {
   constructor(
     viewer: Cesium.Viewer,
     gui: dat.GUI,
-    defaultCameraParams?: CameraParamsInterface
+    cameraParams?: CameraParamsInterface
   ) {
     if (Camera.instance) {
       return Camera.instance;
@@ -50,7 +50,7 @@ class Camera {
     this.camera = viewer.scene.camera;
     setParams(this.camera, cameraTable).then(
       (storeCameraParams: CameraParamsInterface) => {
-        this.cameraParams = defaultCameraParams || storeCameraParams;
+        this.cameraParams = cameraParams || storeCameraParams;
         this.setView(this.cameraParams);
         setGui(
           gui,
@@ -133,10 +133,6 @@ class Camera {
       direction: direction,
       headingPitchRoll: headingPitchRoll,
     };
-  }
-
-  getUpdate() {
-    console.log("更新相机");
   }
 }
 
