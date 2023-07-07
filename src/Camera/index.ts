@@ -1,6 +1,8 @@
 import * as Cesium from "cesium";
-import { setGui } from "./_gui";
 import * as dat from "dat.gui";
+import { db, cameraTable } from "./_db";
+import { setGui } from "./_gui";
+import { setParams } from "./_params";
 import { getPosition } from "./utils/getPosition";
 
 export interface CameraInterface {
@@ -37,7 +39,7 @@ class Camera {
   constructor(
     viewer: Cesium.Viewer,
     gui: dat.GUI,
-    cameraParams?: CameraParamsInterface
+    defaultCameraParams?: CameraParamsInterface
   ) {
     if (Camera.instance) {
       return Camera.instance;
@@ -46,22 +48,20 @@ class Camera {
 
     this.viewer = viewer;
     this.camera = viewer.scene.camera;
-    this.cameraParams = cameraParams || {
-      position: {
-        height: 50000,
-        latitude: 28.194205530357323,
-        longitude: 108.82185963058035,
-      },
-      headingPitchRoll: {
-        heading: 5.088887490341627e-14,
-        pitch: -89.92227647667619,
-        roll: 0,
-      },
-    };
-
-    this.setView(this.cameraParams);
-
-    setGui(gui, this.cameraParams, Camera.instance);
+    setParams(this.camera, cameraTable).then(
+      (storeCameraParams: CameraParamsInterface) => {
+        this.cameraParams = defaultCameraParams || storeCameraParams;
+        this.setView(this.cameraParams);
+        setGui(
+          gui,
+          this.cameraParams,
+          Camera.instance,
+          (data: CameraParamsInterface) => {
+            cameraTable.add(data);
+          }
+        );
+      }
+    );
   }
 
   setFly(cameraParams: CameraParamsInterface, completeCb: Function) {

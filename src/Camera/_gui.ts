@@ -7,7 +7,8 @@ import { downloadJson } from "./utils/downloadJson";
 export const setGui = (
   gui: dat.GUI,
   guiParams: CameraParamsInterface,
-  camera: Camera
+  camera: Camera,
+  storeCb: Function
 ) => {
   let camera_folder = gui.addFolder("Camera");
   camera_folder.open();
@@ -105,7 +106,8 @@ export const setGui = (
   let obj = {
     getInfo: () => {
       let info = camera.getInfo();
-      downloadJson("Camera.json", info);
+      // downloadJson("Camera.json", info);
+      storeCb(info);
     },
     updateInfo: () => {
       let info = camera.getInfo();

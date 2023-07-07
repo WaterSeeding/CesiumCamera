@@ -7,6 +7,7 @@ specifiers:
   copy-webpack-plugin: ^9.0.1
   css-loader: ^6.2.0
   dat.gui: ^0.7.9
+  dexie: ^3.2.4
   html-webpack-plugin: ^5.3.2
   style-loader: ^3.2.1
   ts-loader: ^9.4.3
@@ -18,6 +19,7 @@ specifiers:
 
 dependencies:
   dat.gui: 0.7.9
+  dexie: 3.2.4
 
 devDependencies:
   '@types/dat.gui': 0.7.10
@@ -940,6 +942,11 @@ packages:
   /detect-node/2.1.0:
     resolution: {integrity: sha512-T0NIuQpnTvFDATNuHN5roPwSBG83rFsuO+MXXH9/3N1eFbn4wcPjttvjMLEPWJ0RGUYgQE7cGgS3tNxbqCGM7g==}
     dev: true
+
+  /dexie/3.2.4:
+    resolution: {integrity: sha512-VKoTQRSv7+RnffpOJ3Dh6ozknBqzWw/F3iqMdsZg958R0AS8AnY9x9d1lbwENr0gzeGJHXKcGhAMRaqys6SxqA==}
+    engines: {node: '>=6.0'}
+    dev: false
 
   /dir-glob/3.0.1:
     resolution: {integrity: sha512-WkrWp9GR4KXfKGYzOLmTuGVi1UWFfws377n9cc55/tb6DuqyF6pcQ5AbiHEshaDpY9v6oaSr2XCDidGmMwdzIA==}

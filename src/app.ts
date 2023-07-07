@@ -12,7 +12,7 @@ const gui = new dat.GUI({
 gui.domElement.id = "gui";
 gui.show();
 
-let camera = new Camera(viewer, gui, {
+const camera = new Camera(viewer, gui, {
   position: {
     height: 50000,
     longitude: 113.976006,
