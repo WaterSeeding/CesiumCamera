@@ -3,6 +3,7 @@ import * as Cesium from "cesium";
 import * as dat from "dat.gui";
 import { viewer } from "./main";
 import Camera from "./Camera/index";
+import Clock from "./Clock/index";
 import { createModel } from "./model";
 import { getPosition } from "./getPosition";
 
@@ -14,19 +15,6 @@ const gui = new dat.GUI({
 });
 gui.domElement.id = "gui";
 gui.show();
-
-const camera = new Camera(viewer, gui, {
-  position: {
-    height: 260,
-    longitude: -122.98348,
-    latitude: 38.266261,
-  },
-  headingPitchRoll: {
-    heading: 125.167644,
-    pitch: -14.192334,
-    roll: 0,
-  },
-});
 
 let modelPosition = Cesium.Cartesian3.fromRadians(
   -2.1463338399937277,
@@ -45,3 +33,19 @@ createModel(
     defaultModelPosition.height
   )
 );
+
+const camera = new Camera(viewer, gui, {
+  position: {
+    height: 260,
+    longitude: -122.98348,
+    latitude: 38.266261,
+  },
+  headingPitchRoll: {
+    heading: 125.167644,
+    pitch: -14.192334,
+    roll: 0,
+  },
+});
+
+let clock = new Clock(viewer);
+clock.setTime("2023-07-01 08:00:00");
