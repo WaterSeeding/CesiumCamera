@@ -1,6 +1,6 @@
 import * as Cesium from "cesium";
 import * as dat from "dat.gui";
-import { db, cameraTable } from "./_db";
+import { cameraTable } from "./_db";
 import { setGui } from "./_gui";
 import { setParams } from "./_params";
 import { getPosition } from "./utils/getPosition";

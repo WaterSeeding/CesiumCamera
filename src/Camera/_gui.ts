@@ -11,7 +11,7 @@ export const setGui = (
   storeCb: Function
 ) => {
   let camera_folder = gui.addFolder("Camera");
-  camera_folder.open();
+  camera_folder.close();
 
   setGuiSlide(
     camera_folder,
