@@ -2,8 +2,7 @@ import * as Cesium from "cesium";
 
 export const getPosition = (position: Cesium.Cartesian3) => {
   let positionCartographic = Cesium.Cartographic.fromCartesian(
-    position,
-    Cesium.Ellipsoid.WGS84
+    position
   );
 
   let longitude = Cesium.Math.toDegrees(positionCartographic.longitude);

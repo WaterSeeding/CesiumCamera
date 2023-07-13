@@ -4,7 +4,7 @@ import * as dat from "dat.gui";
 import { viewer } from "./main";
 import Camera from "./Camera/index";
 import Clock from "./Clock/index";
-import SunLight from "./SunLight/index";
+// import SunLight from './SunLight/index';
 import DirectionalLight from "./DirectionalLight/index";
 import { createModel } from "./model";
 import { getPosition } from "./getPosition";
@@ -18,13 +18,14 @@ const gui = new dat.GUI({
 gui.domElement.id = "gui";
 gui.show();
 
-let modelPosition = Cesium.Cartesian3.fromRadians(
-  -2.1463338399937277,
-  0.6677959688982861,
-  32.18991401746337
+let modelPosition = Cesium.Cartesian3.fromDegrees(
+  114.05104099176157,
+  22.509032825095247,
+  50
 );
 
 let defaultModelPosition = getPosition(modelPosition);
+console.log("defaultModelPosition", defaultModelPosition);
 
 createModel(
   viewer,
@@ -38,13 +39,13 @@ createModel(
 
 const camera = new Camera(viewer, gui, {
   position: {
-    height: 260,
-    longitude: -122.98348,
-    latitude: 38.266261,
+    height: 1057,
+    longitude: 114.053187,
+    latitude: 22.496277,
   },
   headingPitchRoll: {
-    heading: 125.167644,
-    pitch: -14.192334,
+    heading: 349.179751,
+    pitch: -41.391046,
     roll: 0,
   },
 });

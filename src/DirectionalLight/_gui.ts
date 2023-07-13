@@ -2,6 +2,7 @@ import * as Cesium from "cesium";
 import * as dat from "dat.gui";
 import { DirectionalLightParamsInterface } from "./index";
 import { setGuiSlide } from "./utils/setGuiSlide";
+import { downloadJson } from "./utils/downloadJson";
 
 const reviseGui = (
   light: Cesium.DirectionalLight,
@@ -41,6 +42,7 @@ export const setGui = (
 
   let initGuiParams = Object.assign({}, guiParams);
   reviseGui(light, initGuiParams);
+  let downloadGuiParams = Object.assign({}, guiParams);
 
   setGuiSlide(
     light_folder,
@@ -48,8 +50,8 @@ export const setGui = (
     "longitude",
     "longitude",
     {
-      min: -180,
-      max: 180,
+      min: -360,
+      max: 360,
       step: 0.000001,
     },
     () => {
@@ -63,14 +65,18 @@ export const setGui = (
     "latitude",
     "latitude",
     {
-      min: -180,
-      max: 180,
+      min: -360,
+      max: 360,
       step: 0.000001,
     },
     () => {
       reviseGui(light, guiParams);
     }
   );
+
+  light_folder.add(guiParams.direction, "height").onChange(() => {
+    reviseGui(light, guiParams);
+  });
 
   setGuiSlide(
     light_folder,
@@ -95,14 +101,20 @@ export const setGui = (
   let obj = {
     ensure: () => {
       storeGui(guiParams, storeCb);
+      downloadGuiParams = Object.assign({}, guiParams);
     },
     reset: () => {
       reviseGui(light, initGuiParams);
       storeGui(initGuiParams, storeCb);
       light_folder.revert(light_folder);
-    }
+      downloadGuiParams = Object.assign({}, initGuiParams);
+    },
+    download: () => {
+      downloadJson("sunLighting.json", downloadGuiParams);
+    },
   };
 
-  light_folder.add(obj, 'ensure').name('确定参数');
-  light_folder.add(obj, 'reset').name('重置参数');
+  light_folder.add(obj, "ensure").name("确定参数");
+  light_folder.add(obj, "reset").name("重置参数");
+  light_folder.add(obj, "download").name("下载参数");
 };

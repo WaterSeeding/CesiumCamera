@@ -18,18 +18,20 @@ class DirectionalLight {
   light: Cesium.DirectionalLight;
   lightInitParams!: DirectionalLightParamsInterface;
 
-  constructor(viewer: Cesium.Viewer, gui: dat.GUI) {
+  constructor(
+    viewer: Cesium.Viewer,
+    gui: dat.GUI,
+    directionalLightParams?: DirectionalLightParamsInterface
+  ) {
     this.viewer = viewer;
     this.light = new Cesium.DirectionalLight({
       direction: viewer.scene.camera.directionWC,
     });
     this.viewer.scene.light = this.light;
-    // this.viewer.scene.globe.dynamicAtmosphereLighting = true;
-    // this.viewer.scene.globe.dynamicAtmosphereLightingFromSun = false;
 
     setParams(this.light, directionalLightTable).then(
       (lightParams: DirectionalLightParamsInterface) => {
-        this.lightInitParams = lightParams;
+        this.lightInitParams = directionalLightParams || lightParams;
         setGui(
           gui,
           this.lightInitParams,
