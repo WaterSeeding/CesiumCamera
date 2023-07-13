@@ -5,7 +5,8 @@ import { viewer } from "./main";
 import Camera from "./Camera/index";
 import Clock from "./Clock/index";
 // import SunLight from './SunLight/index';
-import DirectionalLight from "./DirectionalLight/index";
+// import DirectionalLight from "./DirectionalLight/index";
+import MoonLight from "./MoonLight/index";
 import { createModel } from "./model";
 import { getPosition } from "./getPosition";
 
@@ -25,7 +26,6 @@ let modelPosition = Cesium.Cartesian3.fromDegrees(
 );
 
 let defaultModelPosition = getPosition(modelPosition);
-console.log("defaultModelPosition", defaultModelPosition);
 
 createModel(
   viewer,
@@ -53,9 +53,5 @@ const camera = new Camera(viewer, gui, {
 let clock = new Clock(viewer);
 clock.setTime("2023-07-01 08:00:00");
 
-// let sunLight = new SunLight(viewer, gui, {
-//   color: [255, 255, 255, 1],
-//   intensity: 2,
-// });
-
-let directionalLight = new DirectionalLight(viewer, gui);
+let moonLight = new MoonLight(viewer, gui);
+moonLight.update(viewer.scene);
