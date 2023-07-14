@@ -4,9 +4,8 @@ import * as dat from "dat.gui";
 import { viewer } from "./main";
 import Camera from "./Camera/index";
 import Clock from "./Clock/index";
-// import SunLight from './SunLight/index';
-// import DirectionalLight from "./DirectionalLight/index";
-import MoonLight from "./MoonLight/index";
+import Brightness from "./Brightness/index";
+import DirectionalLight from "./DirectionalLight/index";
 import { createModel } from "./model";
 import { getPosition } from "./getPosition";
 
@@ -53,5 +52,5 @@ const camera = new Camera(viewer, gui, {
 let clock = new Clock(viewer);
 clock.setTime("2023-07-01 08:00:00");
 
-let moonLight = new MoonLight(viewer, gui);
-moonLight.update(viewer.scene);
+let brightness = new Brightness(viewer, gui);
+let directionalLight = new DirectionalLight(viewer, gui);
