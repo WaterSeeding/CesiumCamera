@@ -5,6 +5,7 @@ import { viewer } from "./main";
 import Camera from "./Camera/index";
 import Clock from "./Clock/index";
 import Brightness from "./Brightness/index";
+import Bloom from "./Bloom/index";
 import DirectionalLight from "./DirectionalLight/index";
 import { createModel } from "./model";
 import { getPosition } from "./getPosition";
@@ -53,4 +54,5 @@ let clock = new Clock(viewer);
 clock.setTime("2023-07-01 08:00:00");
 
 let brightness = new Brightness(viewer, gui);
+let bloom = new Bloom(viewer, gui);
 let directionalLight = new DirectionalLight(viewer, gui);

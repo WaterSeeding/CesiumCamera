@@ -27,7 +27,7 @@ class Brightness {
           this.brightnessInitParams,
           this.brightness,
           (brightnessParams: BrightnessParamsInterface) => {
-            brightnessTable.put(brightnessParams);
+            brightnessTable.add(brightnessParams);
           }
         );
       }
