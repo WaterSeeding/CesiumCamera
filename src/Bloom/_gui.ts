@@ -137,7 +137,7 @@ export const setGui = (
       downloadGuiParams = Object.assign({}, initGuiParams);
     },
     download: () => {
-      downloadJson("brightness.json", downloadGuiParams);
+      downloadJson("bloom.json", downloadGuiParams);
     },
   };
 
