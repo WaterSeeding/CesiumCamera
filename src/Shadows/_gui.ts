@@ -36,21 +36,6 @@ export const setGui = (
     }
   );
 
-  setGuiSlide(
-    shadows_folder,
-    guiParams,
-    "maximumDistance",
-    "maximumDistance",
-    {
-      min: 0.5,
-      max: 100.0,
-      step: 0.1,
-    },
-    (v: number) => {
-      console.log("density", v);
-    }
-  );
-
   let obj = {
     ensure: () => {
       storeGui(guiParams, storeCb);

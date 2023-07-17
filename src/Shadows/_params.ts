@@ -4,7 +4,7 @@ import { ShadowsParamsInterface } from "./index";
 
 const defaultParams: ShadowsParamsInterface = {
   softShadows: true,
-  size: 100,
+  size: 1024,
 };
 
 export const setParams = async (
