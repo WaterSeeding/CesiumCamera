@@ -23,6 +23,7 @@ export const createModel = (
       show: true,
       uri: url,
       scale: 7.0,
+      shadows: Cesium.ShadowMode.CAST_ONLY,
     },
   });
 };

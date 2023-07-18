@@ -1,16 +1,21 @@
 import * as Cesium from "cesium";
 import { ShadowsParamsInterface } from "./index";
 import { setGuiCheckbox } from "./utils/setGuiCheckbox";
-import { setGuiSlide } from "./utils/setGuiSlide";
 import { downloadJson } from "./utils/downloadJson";
 
 const reviseGui = (
   shadows: Cesium.ShadowMap,
   guiParams: ShadowsParamsInterface
-) => {};
+) => {
+  shadows.softShadows = Boolean(guiParams.softShadows);
+  shadows.size = Number(guiParams.size);
+};
 
 const storeGui = (guiParams: ShadowsParamsInterface, storeCb: Function) => {
-  storeCb({});
+  storeCb({
+    softShadows: Boolean(guiParams.softShadows),
+    size: Number(guiParams.size),
+  });
 };
 
 export const setGui = (
@@ -35,6 +40,17 @@ export const setGui = (
       reviseGui(shadows, guiParams);
     }
   );
+
+  let listen_size = shadows_folder.add(guiParams, "size", {
+    "Size: 4096": 4096,
+    "Size: 2048": 2048,
+    "Size: 1024": 1024,
+    "Size: 512": 512,
+    "Size: 256": 256,
+  });
+  listen_size.onChange(() => {
+    reviseGui(shadows, guiParams);
+  });
 
   let obj = {
     ensure: () => {
