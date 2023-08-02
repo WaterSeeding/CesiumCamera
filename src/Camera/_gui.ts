@@ -1,23 +1,21 @@
-import * as dat from "dat.gui";
-import { CameraParamsInterface } from "./index";
-import Camera from "./index";
-import { setGuiSlide } from "./utils/setGuiSlide";
-import { downloadJson } from "./utils/downloadJson";
+import * as dat from 'dat.gui';
+import Camera, { CameraParamsInterface } from './index';
+import { setGuiSlide } from './utils/setGuiSlide';
 
 export const setGui = (
   gui: dat.GUI,
   guiParams: CameraParamsInterface,
   camera: Camera,
-  storeCb: Function
-) => {
-  let camera_folder = gui.addFolder("Camera");
-  camera_folder.close();
+  storeCb: (data: CameraParamsInterface) => void,
+): dat.GUI => {
+  let camera_folder = gui.addFolder('Camera');
+  camera_folder.open();
 
   setGuiSlide(
     camera_folder,
-    guiParams.position,
-    "longitude",
-    "longitude [经度]",
+    guiParams.position!,
+    'longitude',
+    'longitude [经度]',
     {
       min: -360,
       max: 360,
@@ -25,14 +23,14 @@ export const setGui = (
     },
     () => {
       camera.setView(guiParams);
-    }
+    },
   );
 
   setGuiSlide(
     camera_folder,
-    guiParams.position,
-    "latitude",
-    "latitude [纬度]",
+    guiParams.position!,
+    'latitude',
+    'latitude [纬度]',
     {
       min: -360,
       max: 360,
@@ -40,14 +38,14 @@ export const setGui = (
     },
     () => {
       camera.setView(guiParams);
-    }
+    },
   );
 
   setGuiSlide(
     camera_folder,
-    guiParams.position,
-    "height",
-    "height [高度]",
+    guiParams.position!,
+    'height',
+    'height [高度]',
     {
       min: 0,
       max: 10000000,
@@ -55,14 +53,14 @@ export const setGui = (
     },
     () => {
       camera.setView(guiParams);
-    }
+    },
   );
 
   setGuiSlide(
     camera_folder,
-    guiParams.headingPitchRoll,
-    "heading",
-    "heading [朝向度]",
+    guiParams.headingPitchRoll!,
+    'heading',
+    'heading [朝向度]',
     {
       min: -360,
       max: 360,
@@ -70,14 +68,14 @@ export const setGui = (
     },
     () => {
       camera.setView(guiParams);
-    }
+    },
   );
 
   setGuiSlide(
     camera_folder,
-    guiParams.headingPitchRoll,
-    "pitch",
-    "pitch [倾斜度]",
+    guiParams.headingPitchRoll!,
+    'pitch',
+    'pitch [倾斜度]',
     {
       min: -360,
       max: 360,
@@ -85,14 +83,14 @@ export const setGui = (
     },
     () => {
       camera.setView(guiParams);
-    }
+    },
   );
 
   setGuiSlide(
     camera_folder,
-    guiParams.headingPitchRoll,
-    "roll",
-    "roll [翻转度]",
+    guiParams.headingPitchRoll!,
+    'roll',
+    'roll [翻转度]',
     {
       min: -360,
       max: 360,
@@ -100,7 +98,7 @@ export const setGui = (
     },
     () => {
       camera.setView(guiParams);
-    }
+    },
   );
 
   let obj = {
@@ -145,12 +143,14 @@ export const setGui = (
         guiParams.headingPitchRoll.roll = 0.011235222869580546;
       }
       camera.setFly(guiParams, () => {
-        console.log("定位到目标");
+        console.log('定位到目标');
       });
     },
   };
 
-  camera_folder.add(obj, "getInfo").name("相机参数确定");
-  camera_folder.add(obj, "updateInfo").name("相机参数更新");
-  camera_folder.add(obj, "flyInfo").name("相机飞行目标");
+  camera_folder.add(obj, 'getInfo').name('相机参数确定');
+  camera_folder.add(obj, 'updateInfo').name('相机参数更新');
+  camera_folder.add(obj, 'flyInfo').name('相机飞行目标');
+
+  return camera_folder;
 };

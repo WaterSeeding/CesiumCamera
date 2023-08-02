@@ -12,7 +12,7 @@ export const setGuiSlide = (
     max: number;
     step: number;
   },
-  cb: Function,
+  cb: (v: any) => void,
 ) => {
   let listen_value = folder
     .add(params, key)

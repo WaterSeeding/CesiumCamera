@@ -1,14 +1,9 @@
-import * as Cesium from "cesium";
 import * as dat from "dat.gui";
+import * as Cesium from "cesium";
+import { getPosition } from "./utils/getPosition";
 import { cameraTable } from "./_db";
 import { setGui } from "./_gui";
 import { setParams } from "./_params";
-import { getPosition } from "./utils/getPosition";
-
-export interface CameraInterface {
-  viewer: Cesium.Viewer;
-  camera: Cesium.Camera;
-}
 
 export interface CameraParamsInterface {
   // degrees
@@ -31,51 +26,57 @@ export interface CameraParamsInterface {
   };
 }
 
-class Camera {
-  static instance: Camera;
+export default class Camera {
   viewer: Cesium.Viewer;
   camera: Cesium.Camera;
-  cameraParams: CameraParamsInterface;
+  cameraParams: CameraParamsInterface | undefined;
   constructor(
     viewer: Cesium.Viewer,
     gui: dat.GUI,
-    cameraParams?: CameraParamsInterface
+    cameraParams?: CameraParamsInterface,
+    hideGui?: boolean
   ) {
-    if (Camera.instance) {
-      return Camera.instance;
-    }
-    Camera.instance = this;
-
     this.viewer = viewer;
     this.camera = viewer.scene.camera;
+    this.setInit(gui, cameraParams, hideGui);
+  }
+
+  setInit(
+    gui: dat.GUI,
+    cameraParams?: CameraParamsInterface,
+    hideGui?: boolean
+  ) {
     setParams(this.camera, cameraTable).then(
       (storeCameraParams: CameraParamsInterface) => {
         this.cameraParams = cameraParams || storeCameraParams;
         this.setView(this.cameraParams);
-        setGui(
+        let cameraGui = setGui(
           gui,
           this.cameraParams,
-          Camera.instance,
+          this,
           (data: CameraParamsInterface) => {
             cameraTable.add(data);
           }
         );
+        if (hideGui) {
+          cameraGui.hide();
+        }
       }
     );
   }
 
-  setFly(cameraParams: CameraParamsInterface, completeCb: Function) {
+  setFly(cameraParams: CameraParamsInterface, completeCb: () => void) {
     this.camera.flyTo({
       destination: Cesium.Cartesian3.fromDegrees(
-        cameraParams.position.longitude,
-        cameraParams.position.latitude,
-        cameraParams.position.height,
+        cameraParams.position!.longitude,
+        cameraParams.position!.latitude,
+        cameraParams.position!.height,
         Cesium.Ellipsoid.WGS84
       ),
       orientation: {
-        heading: Cesium.Math.toRadians(cameraParams.headingPitchRoll.heading),
-        pitch: Cesium.Math.toRadians(cameraParams.headingPitchRoll.pitch),
-        roll: Cesium.Math.toRadians(cameraParams.headingPitchRoll.roll),
+        heading: Cesium.Math.toRadians(cameraParams.headingPitchRoll!.heading),
+        pitch: Cesium.Math.toRadians(cameraParams.headingPitchRoll!.pitch),
+        roll: Cesium.Math.toRadians(cameraParams.headingPitchRoll!.roll),
       },
       complete: () => {
         completeCb?.();
@@ -86,14 +87,14 @@ class Camera {
   setFlyBoundingSphere(
     boundingSphere: Cesium.BoundingSphere,
     cameraParams: CameraParamsInterface,
-    completeCb: Function
+    completeCb: () => void
   ) {
     this.camera.flyToBoundingSphere(boundingSphere, {
       duration: 1.5,
       offset: new Cesium.HeadingPitchRange(
-        cameraParams.headingPitchRoll.heading,
-        cameraParams.headingPitchRoll.pitch,
-        cameraParams.position.height
+        cameraParams.headingPitchRoll!.heading,
+        cameraParams.headingPitchRoll!.pitch,
+        cameraParams.position!.height
       ),
       complete: () => {
         completeCb?.();
@@ -104,15 +105,15 @@ class Camera {
   setView(cameraParams: CameraParamsInterface) {
     this.camera.setView({
       destination: Cesium.Cartesian3.fromDegrees(
-        cameraParams.position.longitude,
-        cameraParams.position.latitude,
-        cameraParams.position.height,
+        cameraParams.position!.longitude,
+        cameraParams.position!.latitude,
+        cameraParams.position!.height,
         Cesium.Ellipsoid.WGS84
       ),
       orientation: {
-        heading: Cesium.Math.toRadians(cameraParams.headingPitchRoll.heading),
-        pitch: Cesium.Math.toRadians(cameraParams.headingPitchRoll.pitch),
-        roll: Cesium.Math.toRadians(cameraParams.headingPitchRoll.roll),
+        heading: Cesium.Math.toRadians(cameraParams.headingPitchRoll!.heading),
+        pitch: Cesium.Math.toRadians(cameraParams.headingPitchRoll!.pitch),
+        roll: Cesium.Math.toRadians(cameraParams.headingPitchRoll!.roll),
       },
     });
   }
@@ -135,5 +136,3 @@ class Camera {
     };
   }
 }
-
-export default Camera;

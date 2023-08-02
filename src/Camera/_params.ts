@@ -1,6 +1,7 @@
-import * as Cesium from "cesium";
-import { cameraTableInterface } from "./_db";
-import { CameraParamsInterface } from "./index";
+// @ts-ignore
+import { Cesium } from 'umi';
+import { CameraParamsInterface } from './index';
+import { cameraTableInterface } from './_db';
 
 const defaultParams = {
   direction: {
@@ -22,8 +23,8 @@ const defaultParams = {
 
 export const setParams = async (
   camera: Cesium.Camera,
-  cameraTable: cameraTableInterface
-): Promise<CameraParamsInterface | undefined> => {
+  cameraTable: cameraTableInterface,
+): Promise<CameraParamsInterface> => {
   let res = await cameraTable.toArray();
   let latestResValue = res[res.length - 1];
   return latestResValue || defaultParams;
